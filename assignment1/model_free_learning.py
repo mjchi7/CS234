@@ -36,30 +36,7 @@ def learn_Q_QLearning(env, num_episodes=2000, gamma=0.95, lr=0.1, e=0.8, decay_r
     """
     ############################
     # YOUR IMPLEMENTATION HERE #
-    q_value = np.zeros([env.nS, env.nA])  
-    for i in range(num_episodes):
-        done = False
-        state = env.reset()
-        while not done:
-            if np.random.rand() > e:
-                action = np.argmax(q_value[state])
-            else:
-                action = np.random.randint(env.nA)
-            nextstate, reward, done, _ = env.step(action)
-            q_value[state][action] = (1-lr)*q_value[state][action]+lr*(reward+gamma*np.max(q_value[nextstate]))
-            state = nextstate
-        if i%10 == 0:
-            e *= decay_rate        
-    '''
-    print np.mean(q_value)
-    
-    plt.plot(np.arange(num_episodes),np.array(score))
-    plt.title('The running average score of the Q-learning agent')
-    plt.xlabel('traning episodes')
-    plt.ylabel('score')
-    #plt.show()
-    plt.savefig('c.jpg')
-    '''
+
     ############################
     return q_value
 
@@ -90,25 +67,6 @@ def learn_Q_SARSA(env, num_episodes=2000, gamma=0.95, lr=0.1, e=0.8, decay_rate=
     """
     ############################
     # YOUR IMPLEMENTATION HERE #
-    q_value = np.zeros([env.nS, env.nA])  
-    for i in range(num_episodes):
-        done = False
-        state = env.reset()
-        if np.random.rand() > e:
-            action = np.argmax(q_value[state])
-        else:
-            action = np.random.randint(env.nA)
-        while not done:
-            nextstate, reward, done, _ = env.step(action)
-            if np.random.rand() > e:
-                nextaction = np.argmax(q_value[nextstate])
-            else:
-                nextaction = np.random.randint(env.nA)
-            q_value[state][action] = (1-lr)*q_value[state][action]+lr*(reward+gamma*q_value[nextstate][nextaction])
-            state = nextstate
-            action = nextaction
-        if i%10 == 0:
-            e *= decay_rate
     ############################
 
     return q_value

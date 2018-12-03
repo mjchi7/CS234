@@ -35,12 +35,6 @@ class LinearSchedule(object):
         ##############################################################
         ################ YOUR CODE HERE - 3-4 lines ################## 
 
-        value = np.linspace(self.eps_end, self.eps_begin, self.nsteps+1)
-        #if t > self.nsteps:
-        #    self.epsilon = self.eps_end
-        #else:
-        #    self.epsilon = value[t]
-        self.epsilon = value[t] if t <= self.nsteps else self.eps_end 
         ##############################################################
         ######################## END YOUR CODE ############## ########
 
@@ -77,11 +71,6 @@ class LinearExploration(LinearSchedule):
         """
         ##############################################################
         ################ YOUR CODE HERE - 4-5 lines ##################
-
-        temp = np.random.rand()
-        if temp < self.epsilon:
-            best_action = np.random.randint(self.env.action_space.n)
-        return best_action
 
         ##############################################################
         ######################## END YOUR CODE ############## ########

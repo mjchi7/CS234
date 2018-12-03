@@ -35,23 +35,6 @@ def learn_Q_QLearning(env, num_episodes=10000, gamma = 0.99, lr = 0.1, e = 0.2, 
     ########################################################
     #                     YOUR CODE HERE                   #
     ######################################################## 
-    total_score = 0
-    average_score = np.zeros(num_episodes)
-    for i in range(num_episodes):
-        done = False
-        state = env.reset()
-        for _ in range(max_step):
-            if done:
-                break
-            if np.random.rand() > e:
-                action = np.argmax(Q[state])
-            else:
-                action = np.random.randint(env.nA)
-            nextstate, reward, done, _ = env.step(action)
-            Q[state][action] = (1-lr)*Q[state][action]+lr*(reward+gamma*np.max(Q[nextstate]))
-            state = nextstate
-        total_score += reward
-        average_score[i] = total_score / (i+1)
 
     ########################################################
     #                     END YOUR CODE                    #

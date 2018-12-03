@@ -70,15 +70,6 @@ class MyDQN(NatureQN):
         ##############################################################
         ##################### YOUR CODE HERE - 4-5 lines #############
 
-        #done = tf.cast(self.done_mask, tf.float32)
-        idx = tf.arg_max(q, dimension=1)
-        idx_one_hot = tf.one_hot(idx, num_actions)
-        temp = self.r + self.config.gamma*tf.reduce_sum(tf.multiply(target_q, idx_one_hot), axis=1)
-        q_samp = tf.where(self.done_mask, self.r, temp)
-        action = tf.one_hot(self.a, num_actions)
-        q_new = tf.reduce_sum(tf.multiply(action,q), axis=1)
-        self.loss = tf.reduce_mean(tf.square(q_new - q_samp))
-
         ##############################################################
         ######################## END YOUR CODE #######################
 

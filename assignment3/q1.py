@@ -42,34 +42,6 @@ def rmax(env, gamma, m, R_max, epsilon, num_episodes, max_step = 6):
     ########################################################
     #                   YOUR CODE HERE                     #
     ########################################################
-    total_score = 0
-    average_score = np.zeros(num_episodes)
-    for time in range(num_episodes):
-        is_done = False
-        cur_state = env.reset()
-        for _ in range(max_step):
-            if is_done:
-                break
-            action = np.argmax(Q[cur_state])
-            (next_state, reward, is_done, _) = env.step(action)
-            total_score += reward
-            if nSA[cur_state][action] < m:
-                nSA[cur_state][action] += 1
-                R[cur_state][action] += reward
-                nSASP[cur_state][action][next_state] +=1
-                if nSA[cur_state][action] == m:
-                    up_bound = int(np.ceil(np.log(1.0/(epsilon*(1.0-gamma)))/(1.0-gamma)))
-                    for i in range(up_bound):
-                        for s in range(env.nS):
-                            for a in range(env.nA):
-                                if nSA[s][a] >= m:
-                                    q_temp = R[s][a] / nSA[s][a]
-                                    for j in range(env.nS):
-                                        prob = nSASP[s][a][j] / nSA[s][a]    
-                                        q_temp += gamma*prob*np.max(Q[j])
-                                    Q[s][a] = q_temp
-            cur_state = next_state
-        average_score[time] = total_score / (time+1)
     ########################################################
     #                    END YOUR CODE                     #
     ########################################################

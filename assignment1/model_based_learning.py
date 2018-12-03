@@ -129,18 +129,6 @@ def update_mdp_model_with_history(counts, rewards, history):
 
     ############################
     # YOUR IMPLEMENTATION HERE #
-    for item in history:
-        #print item
-        (state, action, reward, next_state, done) = item
-        #if not done:
-        #    counts[state][action][next_state] += 1
-        #    rewards[state][action][next_state] = float(rewards[state][action][next_state]+reward) / counts[state][action][next_state]
-        #else:
-        #    counts[state][action][next_state] = 1
-        #    rewards[state][action][next_state] = float(rewards[state][action][next_state]+reward) / counts[state][action][next_state]
-        counts[state][action][next_state] += 1
-        all_reward = float(rewards[state][action][next_state]*(counts[state][action][next_state]-1)+reward)
-        rewards[state][action][next_state] = all_reward / counts[state][action][next_state]
     ############################
     return counts, rewards
 
@@ -187,28 +175,6 @@ def learn_with_mdp_model(env, method=None, num_episodes=5000, gamma = 0.95, e = 
 
     ############################
     # YOUR IMPLEMENTATION HERE #
-    new_policy = np.zeros((env.nS)).astype(int)
-    terminal_state = []
-    for i in range(num_episodes):
-        done = False
-        state = env.reset()
-        his = []
-        while not done:
-            if np.random.rand() > e:
-                action = new_policy[state]
-            else:
-                action = np.random.randint(env.nA)
-            nextstate, reward, done, _ = env.step(action)
-            his.append([state, action, reward, nextstate, done])
-            state = nextstate
-        if state not in terminal_state:
-            terminal_state.append(state)
-        counts, rewards = update_mdp_model_with_history(counts, rewards, his)
-        P = counts_and_rewards_to_P(counts, rewards, terminal_state)
-        _, new_policy = method(P, env.nS, env.nA, gamma)
-
-        if i%10 == 0:
-            e *= decay_rate
     ############################
 
     return new_policy
